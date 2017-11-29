@@ -1,21 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      html,
-      body {
-        font-family: Arial, sans-serif;
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 100%;
-      }
-    </style>
+    <link type="text/css" rel="stylesheet" href="/styles.css">
   </head>
   <body>
-    <div id="map"></div>
+    <div class="container">
+      <div class="options-box">
+        <h1>Find a Portland Hotspot</h1>
+        <div>
+          <input id="show-listings" type="button" value="Show Listings">
+          <input id="hide-listings" type="button" value="Hide Listings">
+        </div>
+      </div>
+      <div id="map"></div>
+    </div>
     <script>
       var map;
       // Create a new blank array for all the listing markers.
@@ -46,7 +44,6 @@
           var title = locations[i].title;
           // Create a marker per location, and put into markers array.
           var marker = new google.maps.Marker({
-            map: map,
             position: position,
             title: title,
             animation: google.maps.Animation.DROP,
@@ -60,9 +57,11 @@
           });
           bounds.extend(markers[i].position);
         }
-        // Extend the boundaries of the map for each marker
-        map.fitBounds(bounds);
+        
+        document.getElementById('show-listings').addEventListener('click', showListings);
+        document.getElementById('hide-listings').addEventListener('click', hideListings);
       }
+    
       // This function populates the infowindow when the marker is clicked. We'll only allow
       // one infowindow which will open at the marker that is clicked, and populate based
       // on that markers position.
@@ -78,8 +77,24 @@
           });
         }
       }
+      //This will loop through the markers array and display them
+      function showListings() {
+          var bounds = new google.maps.LatLngBounds();
+          // Extend the boundaries of the map for each marker and display the marker
+          for (var i = 0; i < markers.length; i++) {
+              markers[i].setMap(map);
+              bounds.extend(markers[i].position);
+          }
+          map.fitBounds(bounds);
+      }
+      //This will loop through the markets and hide them.
+      function hideListings() {
+          for (var i = 0; i < markers.length; i++) {
+              markers[i].setMap(null);
+          }
+      }
+        
     </script>
-
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMWeMsiE9_jnmovsX0GIgLeLWQUGOUR9g&v=3&callback=initMap">
     </script>
