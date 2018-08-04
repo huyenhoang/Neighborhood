@@ -11,10 +11,10 @@ function initMap() {
   // Normally we'd have these in a database instead.
   var locations = [
     {title: 'Pok Pok', location: {lat: 45.5045786, lng: -122.6321513}},
-      {title: 'Screen Door', location: {lat: 45.522988, lng: -122.6416469}},
-      {title: 'OMSI', location: {lat: 45.5087417, lng: -122.6662964}},
-      {title: 'Portland Art Museum', location: {lat: 45.5161509, lng: -122.6833552}},
-      {title: 'Portland Saturday Market', location: {lat: 45.5226309, lng: -122.6700246}},
+    {title: 'Screen Door', location: {lat: 45.522988, lng: -122.6416469}},
+    {title: 'OMSI', location: {lat: 45.5087417, lng: -122.6662964}},
+    {title: 'Portland Art Museum', location: {lat: 45.5161509, lng: -122.6833552}},
+    {title: 'Portland Saturday Market', location: {lat: 45.5226309, lng: -122.6700246}},
   ];
   // InfoWindow code
   var largeInfowindow = new google.maps.InfoWindow();
@@ -47,7 +47,9 @@ function populateInfoWindow(marker, infowindow) {
   // Check to make sure the infowindow is not already opened on this marker.
   if (infowindow.marker != marker) {
     infowindow.marker = marker;
-    infowindow.setContent('<div>' + marker.title + '</div>');
+    infowindow.setContent('<div>' + marker.title + '</div>' +
+                          '<p>' + 'This is one of the most popular place in Portland' + '</p>'
+                         );
     infowindow.open(map, marker);
     // Make sure the marker property is cleared if the infowindow is closed.
     infowindow.addListener('closeclick', function() {
